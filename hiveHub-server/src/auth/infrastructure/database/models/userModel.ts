@@ -10,11 +10,13 @@ const userSchema = new Schema({
     password: { type: String, required: true },
     username: { type: String, required: true },
     role: { type: String, required: true },
+    isVerified:{type:Boolean,required:true},
     connections: [{
         ConnectionId: { type: Schema.Types.ObjectId },
         UserId: { type: Schema.Types.ObjectId },
     }],
     isActive: { type: Boolean, required: true },
+    otp:{type:String}
 })
 
 export const User=model<UserEntity>('users',userSchema)

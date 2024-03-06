@@ -15,5 +15,7 @@ export interface UserEntity{
     username:string,
     role:string,
     isActive:boolean 
-    connections:connctions[]
+    isVerified:boolean
+    connections:connctions[],
+    otp:string
 }

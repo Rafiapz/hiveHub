@@ -3,7 +3,10 @@ import { authRoutes } from './auth/presentation/routes/authRoutes'
 import {dependancies} from './_boot/dependencies'
 import {connect} from './_boot/databse'
 import cors from 'cors'
+import { configDotenv } from 'dotenv'
 
+
+configDotenv()
 const PORT=process.env.PORT || 7700
 const app:Application=express()
 
