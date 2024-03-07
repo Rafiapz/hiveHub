@@ -6,7 +6,7 @@ export const verifyUserUseCase =(dependencies:IDependencies)=>{
     const {repositories:{verify}}=dependencies
 
     return {
-        execute:async (data:UserEntity)=>{
+        execute:async (data:any)=>{
             try {
                 return await verify(data)
             } catch (error:any) {

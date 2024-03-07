@@ -26,7 +26,10 @@ const  CountDownTimer: React.FC<ChildProps>=({timer,setTimer})=> {
   useEffect(() => {
       localStorage.setItem('timer', timer.toString());
       intervalRef.current = setInterval(decreaseTime, 1000);
-      return () => { clearInterval(intervalRef.current) };
+      return () => {
+         clearInterval(intervalRef.current)
+         localStorage.removeItem('timer')
+         };
   }, [timer]);
 
   const formatTime = (seconds:number) => {
@@ -47,7 +50,12 @@ const  CountDownTimer: React.FC<ChildProps>=({timer,setTimer})=> {
   return (
       <>
       {timer > 0 ? (
-          <h2 className='my-4 text-start text-sm font-medium text-black'>{formatTime(timer)}</h2>
+           <div className="bg-gray-200 rounded-lg w-14 ml-24">
+           
+           <div className="my-2 text-start text-xl font-semibold text-gray-900">
+             {formatTime(timer)}
+           </div>  
+         </div>
       ) : (
           // <h2 className='my-4 text-white text-start text-sm font-extralight'>Don't get the OTP ?
           //     <span onClick={handleResendOtp} className='font-medium cursor-pointer'> asdasdfResend Otp</span>
@@ -60,11 +68,11 @@ const  CountDownTimer: React.FC<ChildProps>=({timer,setTimer})=> {
   )
 
 
-  // const Completionist = () => (
+    // const Completionist = () => (
     // <span className="text-blue-500 cursor-pointer mr-32">
     //   Didn't get OTP? Resend
     // </span>
-  // );
+    // );
 
   
 

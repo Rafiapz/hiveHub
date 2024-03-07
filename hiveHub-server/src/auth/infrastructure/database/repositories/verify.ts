@@ -1,21 +1,38 @@
 import {User} from '../models'
 import {UserEntity} from '../../../domain/entities/userEntity'
 
-export const verify =async (data: UserEntity): Promise<UserEntity | null > =>{
+export const verify =async (data:{email:string,otp:string}) =>{
+  
 
     try {
 
-        const status=await User.findByIdAndUpdate({email:data.email},{otp:data.otp,isVerified:true})
+        const orginalOtp=await User.findOne({email:data.email},{otp:1})
 
-        if(!status){
+       
+        if(orginalOtp?.otp!==data.otp){
+            throw new Error ('Incorrect otp')
+        }
+        
+
+        const user=await User.findOneAndUpdate({email:data.email,otp:data.otp},{isVerified:true,otp:''})        
+        
+
+        if(!user){
             throw new Error ('User updation failed')
         }
 
-        return status
+        const status=await User.findOne({email:data.email},{isVerified:1})
         
-    } catch (error) {
+        
+        if(!status?.isVerified){
+            throw new Error ('User not verified')
+        }
+
+        return user
+        
+    } catch (error:any) {
         console.log(error);
         
-        throw new Error('User creation failed')
+        throw new Error(error.message)
     }
 }

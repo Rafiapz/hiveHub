@@ -12,7 +12,7 @@ export const authRoutes=(dependencies:IDependencies)=>{
 
     router.route('/signup').post(signup)
 
-    router.route('/verify').post(verify)
+    router.route('/otp-verification').post(verify)
 
     return router
 }

@@ -2,16 +2,47 @@ import React from "react";
 import { useState } from "react";
 import OtpInput from "react-otp-input";
 import CountDownTimer from "../CountDownTimer/CountDownTimer";
+import { useDispatch } from "react-redux";
+import { otpVerification, signupAction } from "../../store/actions/auth/userActions";
+import { AppDispatch } from "../../store/store";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import toast from 'react-hot-toast';
 
 function OTPVerfitication() {
-  const [otp, setOtp] = useState("");
+
+
+  const [otp, setOtp] = useState<string>("");
+  const initialTime: string | null = localStorage.getItem('timer');
+  const initialTimeValue: number = initialTime ? parseInt(initialTime, 10) : 60;
+  const [timer, setTimer] = useState<number>(initialTimeValue);
+  const [error,setError]=useState<string>('')
+  const dispatch=useDispatch<AppDispatch>()
+  const [search]=useSearchParams()
+  const navigate=useNavigate()
+  const email=search.get('email')
   const handleChange = (otp: string) => {
     setOtp(otp);
   };
 
-  const initialTime: string | null = localStorage.getItem('timer');
-  const initialTimeValue: number = initialTime ? parseInt(initialTime, 10) : 10;
-  const [timer, setTimer] = useState<number>(initialTimeValue);
+  const handleVerify=()=>{
+    console.log(Date.now(),'==',timer);
+    
+    if(timer<=0){
+      setError('Your OTP has timed out. Please request a new one.')
+      return
+    }else if(otp.length<4){
+      setError('Invalid OTP length. Please enter a 4-digit code.')
+    }else{
+
+    dispatch(otpVerification({otp:otp,email})).then((data)=>{
+      if(data?.payload?.status==='ok'){
+        navigate('/')
+        toast('you have successfully verified your account')
+      }
+    })
+      
+    }
+  }
 
   return (
     <div className="mt-40 ml-36 max-w-lg mx-auto">
@@ -20,7 +51,7 @@ function OTPVerfitication() {
           Please check your email inbox, including the spam folder, for the OTP. Once received, kindly submit it for verification. Thank you for your cooperation!
         </h3>
       </div>
-      <h2 className="text-3xl font-bold mb-4 ml-6">Enter OTP</h2>
+      <h2 className="text-3xl font-bold mb-4 ml-7">Enter OTP</h2>
       <div className="flex items-center ">
         <OtpInput
           value={otp}
@@ -43,13 +74,14 @@ function OTPVerfitication() {
           shouldAutoFocus
         />
         <button
-          // onClick={handleVerify}
+          onClick={handleVerify}
           className="ml-4 px-6 py-3 bg-blue-500 text-white font-semibold rounded-md"
         >
           Verify
         </button>
       </div>
-      <div className="flex items-center justify-center mt-4 mr-32">
+      <span className="text-red-700" >{error}</span>
+      <div className="flex items-center mt-4 mr-32">        
         <CountDownTimer timer={timer} setTimer={setTimer} />
       </div>
     </div>

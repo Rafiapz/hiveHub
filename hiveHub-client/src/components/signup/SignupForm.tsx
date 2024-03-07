@@ -9,6 +9,7 @@ import { AppDispatch } from "../../store/store";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import toast from 'react-hot-toast';
 
 
 function SignupForm() {
@@ -35,10 +36,11 @@ function SignupForm() {
       const handleSubmit = (values:IUserSignupdata) => {
     
         const {confirmPassword,...restValues}=values
-    
+        
         dispatch(signupAction(restValues)).then((data)=>{
           if(data?.payload?.status==='ok'){
-            navigate('/verification')
+            navigate(`/verification?email=${restValues.email}`)
+            toast('you have successfully registered you account',{style:{backgroundColor:'blue',color:'white'}})
           }
         })
         

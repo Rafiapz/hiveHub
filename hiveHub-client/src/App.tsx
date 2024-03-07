@@ -6,6 +6,7 @@ import Layout from './pages/layout/Layout'
 import Home from './pages/user/home/Home'
 import Login from './pages/auth/login/Login'
 import Verification from './pages/auth/verification/Verification'
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   
@@ -14,6 +15,7 @@ function App() {
 
   return (
     <>
+     <Toaster position='top-center' containerClassName='text-red-500' />
     <Routes>
       <Route path='/signup' element={!auth?<Signup/>:<Navigate to={'/'}/>} />
       <Route path='/login' element={!auth?<Login/>:<Navigate to={'/'}/>}/>
