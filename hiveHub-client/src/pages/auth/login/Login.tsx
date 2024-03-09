@@ -1,12 +1,31 @@
 import React from "react";
 import { Formik, Form, ErrorMessage, Field } from "formik";
 import { loginSchema } from "../../../schemas/LoginSchemas";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGoogle,faFacebook } from '@fortawesome/free-brands-svg-icons';
+import { IUserLogin } from "../../../interfaces/IUserLogin";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../store/store";
+import { loginAction } from "../../../store/actions/auth/userActions";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 function Login() {
+
+    const dispatch=useDispatch<AppDispatch>()
+    const navigate=useNavigate()
     
-    const initialValues={email:'',password:''}
-    const handleSubmit=(values:any):void=>{
-        console.log(values);
+    const initialValues:IUserLogin={email:'',password:''}
+    const handleSubmit=(data:IUserLogin):void=>{
+                        
+        dispatch(loginAction(data)).then((res:any)=>{
+            if(res.payload.status=='ok'){
+                navigate('/')
+                toast('You have logged in successfully',{style:{backgroundColor:'green',color:'white'}})
+            }else{
+                toast(res.payload.message,{style:{backgroundColor:'red',color:'white'}})
+            }
+        })
         
     }
     return (
@@ -15,7 +34,7 @@ function Login() {
                 <img src="images/front-image.png" className="mt-24 ml-12" alt="" />
             </div>
             <div className="w-1/2 flex flex-col justify-center items-start">
-                <h2 className="text-3xl font-bold text-black mb-1 ml-8 text-pink-500">
+                <h2 className="text-3xl font-bold mb-1 ml-8 text-orange-400">
                     Login
                 </h2>
                 <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={loginSchema}>
@@ -36,7 +55,7 @@ function Login() {
                     </div>
                     <button
                         type="submit"
-                        className="bg-pink-500 text-white py-2 px-4 rounded-lg mb-4"
+                        className="bg-orange-400 text-white py-2 px-4 rounded-lg mb-4"
                     >
                         Login
                     </button>
@@ -50,10 +69,10 @@ function Login() {
                 </p>
                 <div className="flex justify-center items-center ml-8">
                     <button className="bg-red-600 text-white py-2 px-4 rounded-lg mr-4">
-                        Login with Google
+                      <FontAwesomeIcon icon={faGoogle}/>  Login with Google
                     </button>
                     <button className="bg-blue-700 text-white py-2 px-4 rounded-lg">
-                        Login with Facebook
+                      <FontAwesomeIcon icon={faFacebook}/>  Login with Facebook
                     </button>
                 </div>
             </div>

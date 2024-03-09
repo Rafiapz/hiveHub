@@ -1,4 +1,4 @@
-import { genSalt, hash } from "bcrypt";
+import { genSalt, hash, compare } from "bcrypt";
 
 export const passwordHashing = async (psw: string) => {
   try {
@@ -13,3 +13,16 @@ export const passwordHashing = async (psw: string) => {
     throw new Error (error.message)
   }
 };
+
+export const comparePassword=async (reqPsw:string,ogPsw:string)=>{
+
+  try {
+
+    const status=await compare(reqPsw,ogPsw)
+
+    return status
+    
+  } catch (error:any) {
+    throw new Error (error.message)
+  }
+}

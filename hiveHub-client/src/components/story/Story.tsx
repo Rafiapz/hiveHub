@@ -15,7 +15,7 @@ function Story() {
       ];
     
       return (
-        <div className="flex items-center justify-center p-4 bg-gray-100">
+        <div className="flex items-center justify-center p-4 bg-gray-50 ">
           {stories.map((story, index) => (
             <div key={index} className="flex flex-col items-center justify-center m-2">
               <div className="rounded-full border-2 border-blue-500 p-1">

@@ -27,7 +27,9 @@ export const signupController=(dependencies:IDependencies)=>{
 
             res.status(200).json({status:'ok'})
 
-        } catch (error) {
+        } catch (error:any) {
+
+            res.json({status:'failed',message:error.message}).status(400)
             console.log(error);
             
             

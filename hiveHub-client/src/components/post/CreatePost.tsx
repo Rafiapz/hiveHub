@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage, faFileAlt } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch } from "react-redux";
+import { handleCreatePostModal } from "../../store/slices/user/userSlice";
 
 function CreatePost() {
 
   const [image,setImage]=useState<string|null>(null)
+  const dispatch=useDispatch()
 
   const handleChange=(e:React.ChangeEvent<HTMLInputElement>)=>{
     const file = e.target.files?.[0];
@@ -21,7 +24,7 @@ function CreatePost() {
   }
 
   return (
-    <div className="bg-gray-200 w-1/2 p-4 shadow-lg mx-auto">
+    <div className="bg-gray-200 w-full  mt-2 p-4 shadow-lg mx-auto">
       <label
         htmlFor="file-upload"
         className="cursor-pointer mb-4 flex items-center"
@@ -39,10 +42,10 @@ function CreatePost() {
         rows={4}
       ></textarea>
       <div className="flex justify-end">
-        <button className="bg-red-500 text-white font-bold py-2 px-4 rounded mr-2">
+        <button onClick={()=>dispatch(handleCreatePostModal())} className="bg-white text-black font-bold py-2 px-4 rounded mr-2">
           Cancel
         </button>
-        <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded">
+        <button className="bg-orange-400 text-white font-bold py-2 px-4 rounded">
           Submit
         </button>
       </div>

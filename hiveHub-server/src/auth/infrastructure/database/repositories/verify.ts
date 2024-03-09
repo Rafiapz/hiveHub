@@ -1,5 +1,4 @@
 import {User} from '../models'
-import {UserEntity} from '../../../domain/entities/userEntity'
 
 export const verify =async (data:{email:string,otp:string}) =>{
   
@@ -31,7 +30,7 @@ export const verify =async (data:{email:string,otp:string}) =>{
         return user
         
     } catch (error:any) {
-        console.log(error);
+        
         
         throw new Error(error.message)
     }

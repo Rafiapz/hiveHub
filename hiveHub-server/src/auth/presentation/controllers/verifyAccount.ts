@@ -21,7 +21,7 @@ export const verifyController=(dependancies:IDependencies)=>{
         
            if(user){
             const token=genereateToken({id:user.email})
-            res.json({status:'ok',token}).status(200)
+            res.json({status:'ok',token,role:user.role}).status(200)
            }
             
             
