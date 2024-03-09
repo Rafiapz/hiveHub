@@ -3,6 +3,9 @@ import jwt from 'jsonwebtoken'
 export const genereateToken=(payload:any)=>{
 
     try {
+
+        console.log('payload',payload);
+        
         const secret:any=process.env.jwtSecret;
 
       return jwt.sign(payload,secret,{algorithm:'HS256',expiresIn:60})

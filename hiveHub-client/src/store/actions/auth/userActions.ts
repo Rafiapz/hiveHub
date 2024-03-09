@@ -73,3 +73,17 @@ export const fetchuser=createAsyncThunk('/auth/fetch',async ()=>{
         throw new Error(error.message)
     }
 })
+
+export const loginWithGoogle=createAsyncThunk('/auth/google',async ()=>{
+
+    try {
+
+        const response=await axios.get('/auth/google')
+
+        console.log(response.data);
+        
+        
+    } catch (error:any) {
+        throw new Error(error.message)
+    }
+})

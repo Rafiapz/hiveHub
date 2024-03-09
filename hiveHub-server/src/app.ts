@@ -4,11 +4,20 @@ import {dependancies} from './_boot/dependencies'
 import {connect} from './_boot/databse'
 import cors from 'cors'
 import { configDotenv } from 'dotenv'
+import session = require('express-session')
+
 
 
 configDotenv()
 const PORT=process.env.PORT || 7700
 const app:Application=express()
+
+// app.use(session({
+//     secret: 'keyboard cat',
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: { secure: true }
+//   }))
 
 const corsOptions = {
     origin: 'http://localhost:5173',

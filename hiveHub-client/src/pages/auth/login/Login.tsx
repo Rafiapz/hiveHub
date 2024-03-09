@@ -6,7 +6,7 @@ import { faGoogle,faFacebook } from '@fortawesome/free-brands-svg-icons';
 import { IUserLogin } from "../../../interfaces/IUserLogin";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../store/store";
-import { loginAction } from "../../../store/actions/auth/userActions";
+import { loginAction, loginWithGoogle } from "../../../store/actions/auth/userActions";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
@@ -27,6 +27,10 @@ function Login() {
             }
         })
         
+    }
+
+    const googleAuth=()=>{
+        window.open(`http://localhost:7700/auth/google`, "_self")
     }
     return (
         <div className="flex w-full  overflow-auto">
@@ -68,7 +72,7 @@ function Login() {
                     </a>
                 </p>
                 <div className="flex justify-center items-center ml-8">
-                    <button className="bg-red-600 text-white py-2 px-4 rounded-lg mr-4">
+                    <button onClick={()=>googleAuth()} className="bg-red-600 text-white py-2 px-4 rounded-lg mr-4">
                       <FontAwesomeIcon icon={faGoogle}/>  Login with Google
                     </button>
                     <button className="bg-blue-700 text-white py-2 px-4 rounded-lg">
