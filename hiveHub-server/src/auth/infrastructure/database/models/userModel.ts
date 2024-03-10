@@ -16,7 +16,8 @@ const userSchema = new Schema({
         UserId: { type: Schema.Types.ObjectId },
     }],
     isActive: { type: Boolean, required: true },
-    otp:{type:String}
+    otp:{type:String},
+    createdAt:{type:Date}
 })
 
 export const User=model<UserEntity>('users',userSchema)

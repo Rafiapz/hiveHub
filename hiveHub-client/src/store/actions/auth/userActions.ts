@@ -36,6 +36,23 @@ export const otpVerification=createAsyncThunk('/otp-verification',async (data:IO
     }
 })
 
+export const resendOtpAction=createAsyncThunk('/resend-otp',async (email:string|null)=>{
+
+    try {
+
+        const response=await axios.get(`/auth/resend-otp?email=${email}`)
+        console.log(response);
+        
+        return response.data
+        
+        
+    } catch (error:any) {
+        throw new Error (error.message)
+    }
+})
+
+
+
 export const loginAction=createAsyncThunk('/login',async (data:IUserLogin)=>{
 
     try {

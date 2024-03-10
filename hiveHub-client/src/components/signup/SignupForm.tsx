@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import { signupAction } from "../../store/actions/auth/userActions";
 import { IUserSignupdata } from "../../interfaces/IUserSignup";
 import { AppDispatch } from "../../store/store";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import toast from "react-hot-toast";
@@ -42,9 +42,11 @@ function SignupForm() {
     dispatch(signupAction(restValues)).then((data) => {
       if (data?.payload?.status === "ok") {
         navigate(`/verification?email=${restValues.email}`);
-        toast("you have successfully registered you account", {
+        toast("you have successfully created your account", {
           style: { backgroundColor: "blue", color: "white" },
         });
+      }else{
+        toast(data?.payload?.message)
       }
     });
   };
@@ -173,9 +175,9 @@ function SignupForm() {
       </Formik>
       <p className="text-black mb-4 ml-8">
         Already have an account?{" "}
-        <a href="#" className="text-blue-800">
-          Login
-        </a>
+        <Link className="text-blue-800" to={'/'}>
+        Login
+        </Link>
       </p>
       <div className="flex justify-center items-center ml-8">
         <button className="bg-red-600 text-white py-2 px-4 rounded-lg mr-4">

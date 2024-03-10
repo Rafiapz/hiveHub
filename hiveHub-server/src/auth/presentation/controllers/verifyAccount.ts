@@ -20,8 +20,8 @@ export const verifyController=(dependancies:IDependencies)=>{
            const user= await verifyUserUseCase(dependancies).execute(data)
         
            if(user){
-            const token=genereateToken({id:user.email})
-            res.json({status:'ok',token,role:user.role}).status(200)
+            const token=genereateToken({id:user?._id})
+            res.json({status:'ok',token,role:user.role,message:"You have successfully verified you account"}).status(200)
            }
             
             

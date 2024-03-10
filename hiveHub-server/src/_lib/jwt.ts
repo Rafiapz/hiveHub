@@ -8,7 +8,7 @@ export const genereateToken=(payload:any)=>{
         
         const secret:any=process.env.jwtSecret;
 
-      return jwt.sign(payload,secret,{algorithm:'HS256',expiresIn:60})
+      return jwt.sign(payload,secret,{algorithm:'HS256',expiresIn:60*60*10})
 
         
     } catch (error:any) {
@@ -23,8 +23,8 @@ export const verifyToken=(token:string)=>{
 
         const secret:any=process.env.jwtSecret
         const decoded=jwt.verify(token,secret)
-        if(decoded){
-            console.log(decoded);
+        if(decoded){            
+           
             if(decoded==='jwt expired'){
                 return false
             }
@@ -35,5 +35,27 @@ export const verifyToken=(token:string)=>{
         
     } catch (error:any) {
         throw new Error(error.message)
+    }
+}
+
+export const getTokenPayloads=(token:string)=>{
+
+    try {
+
+        const secret:any=process.env.jwtSecret
+        const decoded=jwt.verify(token,secret) as { [key: string]: any };
+
+        
+
+        if(decoded){
+            return decoded
+        }else{
+            return null
+        }
+
+        
+    } catch (error:any) {
+        throw new Error(error.message);
+        
     }
 }

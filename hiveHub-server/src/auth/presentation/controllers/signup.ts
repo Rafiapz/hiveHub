@@ -18,14 +18,21 @@ export const signupController=(dependencies:IDependencies)=>{
             data.role='user'
             data.isVerified=false
             data.password=await passwordHashing(data.password)
-            console.log(data);
+            data.createdAt=Date.now()
             const otpDetails= generateOtp(data.email)
             const otp=otpDetails?.OTP
             data.otp=otp           
             
-            createUserUseCase(dependencies).execute(data)
+           const user=await createUserUseCase(dependencies).execute(data)
 
+           if(user){
+            
             res.status(200).json({status:'ok'})
+           }else{
+            throw new Error('')
+           }
+
+            
 
         } catch (error:any) {
 

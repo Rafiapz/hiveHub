@@ -9,6 +9,7 @@ export const findOne=async(data:{email:string,password:string}):Promise<UserEnti
         
         return user
         
+        
     } catch (error:any) {
         throw new Error(error.message)
     }

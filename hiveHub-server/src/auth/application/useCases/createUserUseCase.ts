@@ -11,6 +11,7 @@ export const createUserUseCase =(dependencies:IDependencies)=>{
                 return await create(data)
             } catch (error:any) {
                 throw new Error (error.message || 'user creation failled')
+                
             }
         }
     }

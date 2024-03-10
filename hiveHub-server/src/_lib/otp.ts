@@ -1,4 +1,5 @@
 import { createTransport, SendMailOptions } from "nodemailer";
+import {Request,Response,NextFunction} from 'express'
 
 export const generateOtp = (email:string) => {
   try {
@@ -47,6 +48,8 @@ export const generateOtp = (email:string) => {
     console.log(error);
   }
 };
+
+
 
 
 

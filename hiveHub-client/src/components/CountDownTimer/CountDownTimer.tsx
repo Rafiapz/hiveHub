@@ -2,93 +2,76 @@ import React, { useEffect, useRef, useState } from "react";
 import Countdown from "react-countdown";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { resendOtpAction } from "../../store/actions/auth/userActions";
+import { AppDispatch } from "../../store/store";
+import toast from "react-hot-toast";
 
 interface ChildProps {
   timer: number;
   setTimer: React.Dispatch<React.SetStateAction<number>>;
+  email:string|null
 }
 
-const  CountDownTimer: React.FC<ChildProps>=({timer,setTimer})=> {
-
+const CountDownTimer: React.FC<ChildProps> = ({ timer, setTimer,email }) => {
   const intervalRef = useRef<any>();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
   const decreaseTime = () => {
-      if (timer > 0) {
-          setTimer((prev:number) => prev - 1)
-      } else {
-          clearInterval(intervalRef.current);
-          localStorage.removeItem('timer');
-      }
+    if (timer > 0) {
+      setTimer((prev: number) => prev - 1);
+    } else {
+      clearInterval(intervalRef.current);
+      localStorage.removeItem("timer");
+    }
   };
 
   useEffect(() => {
-      localStorage.setItem('timer', timer.toString());
-      intervalRef.current = setInterval(decreaseTime, 1000);
-      return () => {
-         clearInterval(intervalRef.current)
-         localStorage.removeItem('timer')
-         };
+    localStorage.setItem("timer", timer.toString());
+    intervalRef.current = setInterval(decreaseTime, 1000);
+    return () => {
+      clearInterval(intervalRef.current);
+      localStorage.removeItem("timer");
+    };
   }, [timer]);
 
-  const formatTime = (seconds:number) => {
-
+  const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
-    const formattedTime = `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+    const formattedTime = `${minutes
+      .toString()
+      .padStart(2, "0")}:${remainingSeconds.toString().padStart(2, "0")}`;
     return formattedTime;
-
-      
   };
 
   const handleResendOtp = () => {
-      // dispatch(sendOtp(email)).then(() => {
-      //     setTime(120);
-      // })
-  }
+    dispatch(resendOtpAction(email)).then((data:any) => {
+
+      if(data.payload.status==='ok'){
+        setTimer(120);        
+        toast(data.payload.message,{style:{backgroundColor:'green',color:'white'}})
+      }else{
+        toast(data.payload.message,{style:{backgroundColor:'red',color:'white'}})
+      }
+      
+      
+    });
+  };
   return (
-      <>
+    <>
       {timer > 0 ? (
-           <div className="bg-gray-200 rounded-lg w-14 ml-24">
-           
-           <div className="my-2 text-start text-xl font-semibold text-gray-900">
-             {formatTime(timer)}
-           </div>  
-         </div>
+        <div className="bg-gray-200 rounded-lg w-14 ml-24">
+          <div className="my-2 text-start text-xl font-semibold text-gray-900">
+            {formatTime(timer)}
+          </div>
+        </div>
       ) : (
-          // <h2 className='my-4 text-white text-start text-sm font-extralight'>Don't get the OTP ?
-          //     <span onClick={handleResendOtp} className='font-medium cursor-pointer'> asdasdfResend Otp</span>
-          // </h2>
-               <span className="text-blue-500 cursor-pointer mr-32">
-       Didn't get OTP? Resend
-     </span>
+        <span onClick={handleResendOtp} className="text-blue-500 cursor-pointer mr-32">
+          Didn't get OTP? Resend
+        </span>
       )}
-      </>
-  )
+    </>
+  );
+};
 
-
-    // const Completionist = () => (
-    // <span className="text-blue-500 cursor-pointer mr-32">
-    //   Didn't get OTP? Resend
-    // </span>
-    // );
-
-  
-
-  // const renderer = ({ minutes, seconds, completed }:any) => {
-  //   if (completed) {
-  //     return <Completionist />;
-  //   } else {
-  //     return (
-  //       <span className="inline-block bg-gray-200 px-2 mr-32 rounded-md text-gray-800">
-  //         {minutes < 10 ? `0${minutes}` : minutes}:
-  //         {seconds < 10 ? `0${seconds}` : seconds}
-  //       </span>
-  //     );
-  //   }
-  // };
-  // return <Countdown date={Date.now()+10000} renderer={renderer} />;
-}
-
-export default React.memo(CountDownTimer)
+export default React.memo(CountDownTimer);

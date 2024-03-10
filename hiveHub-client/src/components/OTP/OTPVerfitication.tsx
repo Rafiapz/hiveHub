@@ -13,7 +13,7 @@ function OTPVerfitication() {
 
   const [otp, setOtp] = useState<string>("");
   const initialTime: string | null = localStorage.getItem('timer');
-  const initialTimeValue: number = initialTime ? parseInt(initialTime, 10) : 60;
+  const initialTimeValue: number = initialTime ? parseInt(initialTime, 10) : 60*1;
   const [timer, setTimer] = useState<number>(initialTimeValue);
   const [error,setError]=useState<string>('')
   const dispatch=useDispatch<AppDispatch>()
@@ -34,10 +34,12 @@ function OTPVerfitication() {
       setError('Invalid OTP length. Please enter a 4-digit code.')
     }else{
 
-    dispatch(otpVerification({otp:otp,email})).then((data)=>{
+    dispatch(otpVerification({otp:otp,email})).then((data:any)=>{
       if(data?.payload?.status==='ok'){
         navigate('/')
-        toast('you have successfully verified your account')
+        toast(data?.payload?.message,{style:{backgroundColor:'green',color:'white'}})
+      }else{
+        toast(data?.payload?.message,{style:{backgroundColor:'red', color:'white'}})
       }
     })
       
@@ -82,7 +84,7 @@ function OTPVerfitication() {
       </div>
       <span className="text-red-700" >{error}</span>
       <div className="flex items-center mt-4 mr-32">        
-        <CountDownTimer timer={timer} setTimer={setTimer} />
+        <CountDownTimer email={email} timer={timer} setTimer={setTimer} />
       </div>
     </div>
 

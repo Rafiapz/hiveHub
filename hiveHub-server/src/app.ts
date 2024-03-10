@@ -1,9 +1,12 @@
 import express, { Application } from 'express'
 import { authRoutes } from './auth/presentation/routes/authRoutes'
-import {dependancies} from './_boot/dependencies'
+import{postRoutes} from './posts/presentation/routes/postRoutes'
+import {authDependencies} from './_boot/dependencies'
+import {postDependencies} from './_boot/dependencies'
 import {connect} from './_boot/databse'
 import cors from 'cors'
 import { configDotenv } from 'dotenv'
+import path from 'path'
 import session = require('express-session')
 
 
@@ -31,7 +34,11 @@ app.use(express.urlencoded({extended:true}))
 
 connect()
 
-app.use('/auth',authRoutes(dependancies))
+app.use(express.static(path.join(__dirname,'..','public')))
+
+app.use('/auth',authRoutes(authDependencies))
+
+app.use('/post',postRoutes(postDependencies))
 
 app.listen(PORT,()=>console.log(`server running on the port ${PORT}`))
 

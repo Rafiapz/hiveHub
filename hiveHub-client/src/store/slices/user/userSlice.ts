@@ -12,9 +12,6 @@ const initialState={
         data:null
 
     },
-    post:{
-
-    },
     createPostModal:{
         isOpen:false
     }

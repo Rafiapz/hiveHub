@@ -10,7 +10,7 @@ import { genereateToken } from '../../../_lib/jwt'
 
 export const authRoutes=(dependencies:IDependencies)=>{    
         
-    const {signup,verify,login}=controllers(dependencies)
+    const {signup,verify,login,updateOtp}=controllers(dependencies)
 
     const router=Router()
 
@@ -21,6 +21,8 @@ export const authRoutes=(dependencies:IDependencies)=>{
     router.route('/login').post(login)
 
     router.route('/fetch-user').get(isAuthorized)
+
+    router.route('/resend-otp').get(updateOtp)
 
 
     router.use(passport.initialize())

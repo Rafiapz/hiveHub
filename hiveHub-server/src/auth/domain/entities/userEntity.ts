@@ -7,6 +7,8 @@ interface connctions{
 }
 
 export interface UserEntity{
+
+    _id?:ObjectId
     fullName:string,
     profilePhoto?:string,
     coverPhoto? :string,
@@ -17,5 +19,6 @@ export interface UserEntity{
     isActive:boolean 
     isVerified:boolean
     connections:connctions[],
-    otp:string
+    otp:string,
+    createdAt:Date
 }

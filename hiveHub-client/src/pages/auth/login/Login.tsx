@@ -7,7 +7,7 @@ import { IUserLogin } from "../../../interfaces/IUserLogin";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../store/store";
 import { loginAction, loginWithGoogle } from "../../../store/actions/auth/userActions";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link} from "react-router-dom";
 import toast from "react-hot-toast";
 
 function Login() {
@@ -67,9 +67,9 @@ function Login() {
                 </Formik>
                 <p className="text-black mb-4 ml-8">
                     Don't have an account?{" "}
-                    <a href="#" className="text-blue-800">
-                        Sign Up
-                    </a>
+                    <Link className="text-blue-800" to={'/signup'}>
+                        Signup
+                    </Link>
                 </p>
                 <div className="flex justify-center items-center ml-8">
                     <button onClick={()=>googleAuth()} className="bg-red-600 text-white py-2 px-4 rounded-lg mr-4">
