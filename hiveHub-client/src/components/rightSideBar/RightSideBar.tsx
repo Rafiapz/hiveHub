@@ -3,16 +3,19 @@ import Searchbox from "../search/Searchbox";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faSignOutAlt} from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
-import { logoutReducer } from "../../store/slices/user/userSlice";
 import { useNavigate } from "react-router-dom";
+import { logoutAction } from "../../store/actions/auth/userActions";
+import { AppDispatch } from "../../store/store";
 
 function RightSideBar() {
-  const dispatch=useDispatch()
+  const dispatch=useDispatch<AppDispatch>()
   const navigate=useNavigate()
   const handleLogout = () => {
-    localStorage.removeItem('token')
-    dispatch(logoutReducer())
-    navigate('/')
+   
+    dispatch(logoutAction()).then(()=>{
+      navigate('/')
+    })
+    
   };
   return (
     <div className="bg-gray-50 h-full w-80 fixed top-0 right-0 flex flex-col justify-between shadow-lg">

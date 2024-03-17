@@ -8,6 +8,8 @@ import cors from 'cors'
 import { configDotenv } from 'dotenv'
 import path from 'path'
 import session = require('express-session')
+import {Request,Response,NextFunction} from 'express'
+import cookieParser = require('cookie-parser')
 
 
 
@@ -15,12 +17,10 @@ configDotenv()
 const PORT=process.env.PORT || 7700
 const app:Application=express()
 
-// app.use(session({
-//     secret: 'keyboard cat',
-//     resave: false,
-//     saveUninitialized: true,
-//     cookie: { secure: true }
-//   }))
+const secret:string=process.env.SESSION_SECRET||'Q3UBzdH9GEfiRCTKbi5MTPyChpzXLsTD'
+
+app.use(session({ secret: secret, resave: true, saveUninitialized: true }));
+
 
 const corsOptions = {
     origin: 'http://localhost:5173',
@@ -28,6 +28,7 @@ const corsOptions = {
     credentials: true,
 }
 app.use(cors(corsOptions));
+app.use(cookieParser())
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
@@ -39,6 +40,10 @@ app.use(express.static(path.join(__dirname,'..','public')))
 app.use('/auth',authRoutes(authDependencies))
 
 app.use('/post',postRoutes(postDependencies))
+
+app.use((req:Request,res:Response)=>{
+    res.json({message:'not found'}).status(404)
+})
 
 app.listen(PORT,()=>console.log(`server running on the port ${PORT}`))
 

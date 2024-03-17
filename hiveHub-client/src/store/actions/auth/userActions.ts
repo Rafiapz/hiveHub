@@ -1,18 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 import {IUserSignupdata} from '../../../interfaces/IUserSignup'
 import { IOtp } from "../../../interfaces/IOtp";
 import { IUserLogin } from "../../../interfaces/IUserLogin";
-axios.defaults.baseURL='http://localhost:7700'
+import apiClient from "../../../utils/axios";
+import { jsonConfig } from "../../../utils/apiUtils";
+import { FETCH_USER_URL, LOGIN_URL, LOGOUT_URL, OTP_VERIFICATION_URL, RESEND_OTP_URL, SIGNUP_URL } from "../../../utils/endPoint";
+
 
 export const signupAction=createAsyncThunk( '/signup',async (userCredentials:IUserSignupdata,{rejectWithValue})=>{   
         try {
-            const response=await axios.post('/auth/signup',userCredentials,{
-                headers:{"Content-Type":"application/json"},
-                withCredentials:true
-            })
-
-            console.log(response);
+            const response=await apiClient.post(SIGNUP_URL,userCredentials,jsonConfig)              
+       
             return response.data
             
         } catch (error:any) {
@@ -25,9 +23,9 @@ export const otpVerification=createAsyncThunk('/otp-verification',async (data:IO
 
     try {
 
-        const response=await axios.post('/auth/otp-verification',data)
-        console.log(response);
-        localStorage.setItem('token',response.data.token)
+        const response=await apiClient.post(OTP_VERIFICATION_URL,data,jsonConfig)
+        console.log(response.data);
+        
         return response.data
         
         
@@ -40,9 +38,8 @@ export const resendOtpAction=createAsyncThunk('/resend-otp',async (email:string|
 
     try {
 
-        const response=await axios.get(`/auth/resend-otp?email=${email}`)
-        console.log(response);
-        
+        const response=await apiClient.get(`${RESEND_OTP_URL}?email=${email}`)
+                
         return response.data
         
         
@@ -57,33 +54,38 @@ export const loginAction=createAsyncThunk('/login',async (data:IUserLogin)=>{
 
     try {
             
-        const response=await axios.post('/auth/login',data)
-        console.log(response);
-        if(response.data.status==='ok'){
-            localStorage.setItem('token',response.data.token)
-            
-        }
-        
+        const response=await apiClient.post(LOGIN_URL,data)
+       
         return response.data
     } catch (error:any) {
         throw new Error(error.message)
     }
 })
 
+export const logoutAction=createAsyncThunk('/logout',async ()=>{
+
+    try {
+       
+       const response= await apiClient.get(LOGOUT_URL)
+             
+       return response.data
+       
+        
+    } catch (error) {
+        
+    }
+})
+
 export const fetchuser=createAsyncThunk('/auth/fetch',async ()=>{
 
     try {
-
                
-        const token=localStorage.getItem('token')
-        if(!token){
-            throw new Error ('Token not found')
-        }
-        const response=await axios.get('/auth/fetch-user',{headers:{Authorization:token}})
-        console.log(response);
+        const response=await apiClient.get(FETCH_USER_URL,)
+      
         if(response.data.status!=='ok'){
             throw new Error('Not authorized')
         }
+        return response.data
         
         
     } catch (error:any) {
@@ -91,13 +93,13 @@ export const fetchuser=createAsyncThunk('/auth/fetch',async ()=>{
     }
 })
 
-export const loginWithGoogle=createAsyncThunk('/auth/google',async ()=>{
+export const loginWithGoogle=createAsyncThunk('/auth/google',async (accessToken:any)=>{
 
     try {
 
-        const response=await axios.get('/auth/google')
-
+        const response=await apiClient.post('/auth/google',{googleAccesToken:accessToken})
         console.log(response.data);
+        return response.data
         
         
     } catch (error:any) {

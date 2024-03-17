@@ -25,11 +25,10 @@ export const signupController=(dependencies:IDependencies)=>{
             
            const user=await createUserUseCase(dependencies).execute(data)
 
-           if(user){
-            
-            res.status(200).json({status:'ok'})
+           if(user){            
+            res.status(200).json({status:'ok',userData:user})
            }else{
-            throw new Error('')
+            throw new Error('failed to verify email')
            }
 
             

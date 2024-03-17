@@ -5,6 +5,7 @@ export interface PostEntity{
     _id?:ObjectId;
     userId:ObjectId;
     content?:string;
-    media?:string;
+    image?:string;
+    video?:string;
     createdAt:Date;
 }

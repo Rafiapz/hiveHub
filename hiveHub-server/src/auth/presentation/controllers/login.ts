@@ -12,7 +12,7 @@ export const loginController=(dependencies:IDependencies)=>{
         try {
 
            
-          const user=await findOneUserUseCase(dependencies).execute(req.body)
+          const user=await findOneUserUseCase(dependencies).execute({email:req.body.email})
             
           if(!user){
             res.json({status:'failed',message:'Invalid email or password'}).status(400)
@@ -22,8 +22,9 @@ export const loginController=(dependencies:IDependencies)=>{
 
              if(status){
               const token= genereateToken({id:user?._id})
-
-              res.json({status:'ok',message:'success',token,role:user.role}).status(200)
+              const userData=await findOneUserUseCase(dependencies).execute({email:user.email})
+              res.cookie('user_token',token)
+              res.json({status:'ok',message:'success',userData}).status(200)
              }else{
 
                 res.json({status:'failed',message:'Invalid email or password'}).status(200)

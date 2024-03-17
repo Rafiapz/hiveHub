@@ -10,7 +10,7 @@ import {
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
-import { handleCreatePostModal } from "../../store/slices/user/userSlice";
+import { handleCreatePostModal } from "../../store/slices/posts/postSlice";
 
 function Menu() {
 

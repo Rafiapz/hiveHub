@@ -25,8 +25,7 @@ function OTPVerfitication() {
   };
 
   const handleVerify=()=>{
-    console.log(Date.now(),'==',timer);
-    
+      
     if(timer<=0){
       setError('Your OTP has timed out. Please request a new one.')
       return

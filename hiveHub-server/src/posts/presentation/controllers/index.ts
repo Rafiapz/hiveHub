@@ -6,6 +6,7 @@ export const controllers=(dependencies:IPostDependencies)=>{
 
     return {
        createPost:createPostController(dependencies),
-       fetchAllposts:fetchAllposts(dependencies)
+       fetchAllposts:fetchAllposts(dependencies),
+       
     }
 }

@@ -6,7 +6,7 @@ export const findOneUserUseCase=(dependencies:IDependencies)=>{
     const {repositories:{findOne}}=dependencies
 
     return {
-        execute:async (data:UserEntity)=>{
+        execute:async (data:{email:string})=>{
             return await findOne(data)
         }
     }

@@ -1,35 +1,34 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
-import axios from "axios"
-axios.defaults.baseURL = 'http://localhost:7700'
+import { CREATE_POST_URL, FETCH_ALL_POSTS_URL } from "../../../utils/endPoint"
+import { jsonConfig, multiPartConfig } from "../../../utils/apiUtils"
+import apiClient from "../../../utils/axios"
 
-export const createPostAction = createAsyncThunk('/post/create', async (form: any) => {
+
+export const createPostAction = createAsyncThunk('/post/create', async (form: any,{rejectWithValue}) => {
 
     try {
 
-        const token = localStorage.getItem('token')
+        const response = await apiClient.post(CREATE_POST_URL, form,multiPartConfig)
+        console.log(response);
 
-        if (token) {
-            const response = await axios.post('/post/create-post', form, { headers: { Authorization: token } })
-            console.log(response);
-        }
-
-
-    } catch (error) {
+        return response.data
+    } catch (error:any) {
         console.log(error);
+        rejectWithValue(error.message)
 
     }
 })
 
-export const fetchAllposts=createAsyncThunk('/post/fetch-all-posts',async()=>{
+export const fetchAllposts = createAsyncThunk('/post/fetch-all-posts', async () => {
 
     try {
 
-        const response=await axios.get('/post/fetch-all-posts')
-        
+        const response = await apiClient.get(FETCH_ALL_POSTS_URL)
+
         return response.data
-        
+
     } catch (error) {
         console.log(error);
-        
+
     }
 })

@@ -15,10 +15,10 @@ export interface UserEntity{
     email:string,
     password:string,
     username:string,
-    role:string,
+    role?:string,
     isActive:boolean 
     isVerified:boolean
-    connections:connctions[],
-    otp:string,
+    connections?:connctions[],
+    otp?:string,
     createdAt:Date
 }

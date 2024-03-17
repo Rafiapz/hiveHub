@@ -6,7 +6,8 @@ import {PostEntity} from '../../../domain/entities'
 const PostsSchema: Schema = new Schema({
   userId: { type: Schema.Types.ObjectId, required: true,ref:'users' },
   content: { type: String },
-  media: { type: String },
+  image: { type: String },
+  video:{type:String},
   createdAt: { type: Date },
 });
 

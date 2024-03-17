@@ -1,7 +1,7 @@
 import { UserEntity } from "../../../domain/entities"
 import { User } from "../models"
 
-export const findOne=async(data:{email:string,password:string}):Promise<UserEntity|null>=>{
+export const findOne=async(data:{email:string}):Promise<UserEntity|null>=>{
 
     try {
 

@@ -41,8 +41,11 @@ function Posts() {
                   <img src='https://source.unsplash.com/150x150/?nature' alt="User" className="rounded-full h-8 w-8 mr-2" />
                   <p className="font-bold">{item?.userId?.fullName}</p>
                 </div>
+
+                <p>{item?.media}</p>
                 
-                <img src={`http://localhost:7700/posts/${item?.media}`} alt="Posted" className="mb-4 rounded-lg w-full" />
+                {/* <img src={`${item?.media}`} alt="Posted" className="mb-4 rounded-lg w-full" /> */}
+                <video controls src={`${item?.media}`}></video>
                 <div className="flex justify-between">
                   <div>
                     <FontAwesomeIcon icon={faHeart} className="mr-4 text-red-600 size-7 cursor-pointer text-xl hover:text-red-600 transition duration-300" />

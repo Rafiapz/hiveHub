@@ -1,5 +1,5 @@
 import {ActionReducerMapBuilder, createSlice} from '@reduxjs/toolkit'
-import { fetchAllposts } from '../../actions/post/postActions'
+import { createPostAction, fetchAllposts } from '../../actions/post/postActions'
 
 
 
@@ -9,6 +9,9 @@ const initialState={
         loading:false,
         data:null,
         error:null
+    },
+    createPostModal:{
+        isOpen:false
     }
 }
 
@@ -17,7 +20,9 @@ const postSlice=createSlice({
     name:'posts',
     initialState:initialState,
     reducers:{
-
+        handleCreatePostModal:(state)=>{
+            state.createPostModal.isOpen=!state.createPostModal.isOpen                 
+        },
     },
 
     extraReducers:(builder)=>{
@@ -32,13 +37,15 @@ const postSlice=createSlice({
         })
         .addCase(fetchAllposts.rejected,(state)=>{
             state.posts.loading=false;
-            state.posts.data=null;
-           
+            state.posts.data=null;           
+        })
+        .addCase(createPostAction.fulfilled,(state)=>{
+            state.createPostModal.isOpen=false
         })
     }
 })
 
 
-export const {} =postSlice.actions
+export const {handleCreatePostModal} =postSlice.actions
 
-export default postSlice.reducer
+export default postSlice.reducer    

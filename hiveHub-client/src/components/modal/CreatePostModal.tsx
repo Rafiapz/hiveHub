@@ -5,7 +5,7 @@ import { RootState } from "../../store/store";
 
 function CreatePostModal({  onClose }: any) {
 
-    const isOpen=useSelector((state:RootState)=>state.user.createPostModal.isOpen)
+    const isOpen=useSelector((state:RootState)=>state.posts.createPostModal.isOpen)
 
     if(!isOpen){
         document.body.style.overflow = 'auto';
