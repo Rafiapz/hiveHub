@@ -22,8 +22,8 @@ function CreatePostModal({  onClose }: any) {
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
         >
-          Close
         </button>
+        
         <CreatePost />
       </div>
     </div>

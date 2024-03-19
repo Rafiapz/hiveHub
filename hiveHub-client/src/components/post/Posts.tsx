@@ -14,18 +14,19 @@ function Posts() {
   const loading = useSelector((state: RootState) => state.posts.posts.loading)
   const allPosts = useSelector((state: RootState) => state.posts.posts.data)
 
-  const baseUrl='http://localhost:7700'
+  const baseUrl = 'http://localhost:7700'
   useEffect(() => {
 
     dispatch(fetchAllposts()).then((data) => {
       setPosts(data.payload.data)
     })
 
+    
 
   }, [])
 
-  
-  
+
+
 
   return (
 
@@ -34,18 +35,17 @@ function Posts() {
       {loading ? <Loading />
         :
         <>
-          {posts?.map((item:any) => {
+          {posts?.map((item: any) => {
             return (
               <div key={item?._id} className="bg-gray-50 w-1/2 p-4 shadow-lg mx-auto mt-2">
                 <div className="flex items-center mb-4">
                   <img src='https://source.unsplash.com/150x150/?nature' alt="User" className="rounded-full h-8 w-8 mr-2" />
                   <p className="font-bold">{item?.userId?.fullName}</p>
                 </div>
-
-                <p>{item?.media}</p>
                 
-                {/* <img src={`${item?.media}`} alt="Posted" className="mb-4 rounded-lg w-full" /> */}
-                <video controls src={`${item?.media}`}></video>
+                
+                {item.media.type === 'image' && (<img src={`${item?.media?.path}`} alt="Posted" className="mb-4 rounded-lg w-full" />)}
+                {item.media.type === 'video' && (<video controls src={`${item?.media.path}`}></video>)}
                 <div className="flex justify-between">
                   <div>
                     <FontAwesomeIcon icon={faHeart} className="mr-4 text-red-600 size-7 cursor-pointer text-xl hover:text-red-600 transition duration-300" />
