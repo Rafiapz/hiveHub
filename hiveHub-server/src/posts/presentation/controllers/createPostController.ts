@@ -17,15 +17,17 @@ export const createPostController = (dependencies: IPostDependencies) => {
             const token: string | undefined = req.cookies.user_token
             if (token) {
                 const decoded = getTokenPayloads(token)
-                const media = `http://localhost:7700/posts/${req?.file?.filename}`
-                const image=req?.body?.image
+                const path = `http://localhost:7700/posts/${req?.file?.filename}`
+               
 
                 if (decoded) {
+                    const mediaType=req.params.type
+                    console.log(req.params);
+                    
                     const data: PostEntity = {
                         createdAt: new Date(),
                         userId: decoded.id,
-                        image: req?.body?.image,
-                        video:req?.body?.video,
+                        media:mediaType?{type:mediaType,path:path}:undefined,
                         content: req?.body?.content
 
                     }
