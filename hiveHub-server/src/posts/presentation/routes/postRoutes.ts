@@ -9,13 +9,15 @@ import { auth } from '../../../auth/presentation/controllers/isAuthorized'
 
 export const postRoutes=(dependencies:IPostDependencies)=>{    
         
-    const {createPost,fetchAllposts}=controllers(dependencies)
+    const {createPost,fetchAllPosts,deletePost}=controllers(dependencies)
 
     const router=Router()
 
     router.route('/create-post/:type').post(auth,uploadSingleFile,createPost)
 
-    router.route('/fetch-all-posts').get(fetchAllposts)
+    router.route('/fetch-all-posts').get(fetchAllPosts)
+
+    router.route('/delete-post').delete(deletePost)
 
     
 

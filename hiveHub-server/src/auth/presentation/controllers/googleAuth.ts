@@ -30,7 +30,7 @@ export const googleAuthController=(dependencies:IDependencies)=>{
 
             if(existingUser){
 
-                const token=genereateToken({id:existingUser._id})
+                const token=genereateToken({id:existingUser._id,email:existingUser?.email})
 
                 res.cookie('user_token',token,{maxAge:1000*60*30,httpOnly:true})
 
@@ -57,7 +57,7 @@ export const googleAuthController=(dependencies:IDependencies)=>{
 
                 if(newUser){
 
-                    const token=genereateToken({id:newUser._id})
+                    const token=genereateToken({id:newUser._id,email:newUser?.email})
 
                     res.cookie('usre_token',token,{maxAge:1000*60*30,httpOnly:true})
                     res.json({status:'ok'}).status(200)

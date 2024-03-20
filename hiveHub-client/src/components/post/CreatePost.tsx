@@ -6,7 +6,7 @@ import { handleCreatePostModal } from "../../store/slices/posts/postSlice";
 import { AppDispatch } from "../../store/store";
 import { createPostAction } from "../../store/actions/post/postActions";
 import toast from "react-hot-toast";
-import { faViadeo } from "@fortawesome/free-brands-svg-icons";
+
 
 function CreatePost() {
   const [image, setImage] = useState<File | null>(null);
@@ -87,11 +87,11 @@ function CreatePost() {
 
     formData.append("content", content);
 
-    dispatch(createPostAction(formData)).then((data: any) => {
-      if (data.payload.status === "ok") {
-        toast("ok");
+    dispatch(createPostAction(formData)).then((response: any) => {
+      if (response.payload.status === "ok") {
+        toast(response.payload.message,{style:{backgroundColor:'#4caf50',color:'white'}});
       } else {
-        toast("bad", { style: { backgroundColor: "red", color: "white" } });
+        toast(response.payload.message, { style: {backgroundColor:'#ff6347',color:'#eeeeee'}});
       }
     });
   };

@@ -20,7 +20,8 @@ export const fetchAllposts=(dependencies:IPostDependencies)=>{
            }
 
         } catch (error:any) {
-            console.log(error);
+            console.log(error.message);
+            
             res.json({status:'failed',message:error.message})
             
         }

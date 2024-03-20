@@ -1,7 +1,6 @@
 import { Router } from 'express'
 import { IDependencies } from '../../application/interfaces/IDependencies'
 import { controllers } from '../controllers'
-import { isAuthorized } from '../controllers/isAuthorized'
 import passport from 'passport'
 
 
@@ -9,7 +8,7 @@ import passport from 'passport'
 
 export const authRoutes = (dependencies: IDependencies) => {
 
-    const { signup, verify, login, updateOtp, googleAuth, logout } = controllers(dependencies)
+    const { signup, verify, login, updateOtp, googleAuth, logout,fetchUser } = controllers(dependencies)
 
 
 
@@ -25,7 +24,7 @@ export const authRoutes = (dependencies: IDependencies) => {
 
     router.route('/login').post(login)
 
-    router.route('/fetch-user').get(isAuthorized)
+    router.route('/fetch-user').get(fetchUser)
 
     router.route('/resend-otp').get(updateOtp)
 

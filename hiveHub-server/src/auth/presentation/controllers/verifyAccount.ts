@@ -20,7 +20,7 @@ export const verifyController=(dependancies:IDependencies)=>{
            const user= await verifyUserUseCase(dependancies).execute(data)
         
            if(user){
-            const token=genereateToken({id:user?._id})
+            const token=genereateToken({id:user?._id,email:user?.email})
             res.cookie('user_token',token)
             console.log(user);
             

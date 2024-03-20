@@ -17,3 +17,5 @@ export const GOOGLE_AUTH='/auth/google'
 export const CREATE_POST_URL='/post/create-post'
 
 export const FETCH_ALL_POSTS_URL='/post/fetch-all-posts'
+
+export const DELETE_POST_URL='/post/delete-post'

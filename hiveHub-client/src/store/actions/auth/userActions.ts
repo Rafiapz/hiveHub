@@ -85,6 +85,7 @@ export const fetchuser=createAsyncThunk('/auth/fetch',async ()=>{
         if(response.data.status!=='ok'){
             throw new Error('Not authorized')
         }
+              
         return response.data
         
         

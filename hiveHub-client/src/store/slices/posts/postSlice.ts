@@ -1,4 +1,4 @@
-import {ActionReducerMapBuilder, createSlice} from '@reduxjs/toolkit'
+import { createSlice} from '@reduxjs/toolkit'
 import { createPostAction, fetchAllposts } from '../../actions/post/postActions'
 
 
@@ -12,7 +12,7 @@ const initialState={
     },
     createPostModal:{
         isOpen:false
-    }
+    },
 }
 
 const postSlice=createSlice({
@@ -22,7 +22,7 @@ const postSlice=createSlice({
     reducers:{
         handleCreatePostModal:(state)=>{
             state.createPostModal.isOpen=!state.createPostModal.isOpen                 
-        },
+        }
     },
 
     extraReducers:(builder)=>{

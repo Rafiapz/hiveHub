@@ -3,9 +3,7 @@ import { verifyToken } from '../../../_lib/jwt';
 
 export const isAuthorized=(req:Request,res:Response)=>{
 
-    try {
-
-      
+    try {      
                
         
         const token=req.cookies.user_token

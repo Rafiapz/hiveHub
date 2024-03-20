@@ -41,7 +41,7 @@ function Login() {
         toast(error.message)
     }
 
-    const googleAuth=useGoogleLogin({onSuccess:handleGoogleLoginSuccess,})
+    const googleAuth=useGoogleLogin({onSuccess:handleGoogleLoginSuccess,onError:handleGoogleLoginError})
 
  
     return (

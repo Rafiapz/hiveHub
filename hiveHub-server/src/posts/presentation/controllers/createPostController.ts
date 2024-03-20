@@ -35,7 +35,7 @@ export const createPostController = (dependencies: IPostDependencies) => {
                     const post = await createPostUseCase(dependencies).execute(data)
 
                     if (post) {
-                        res.json({ status: 'ok', postData: post })
+                        res.json({ status: 'ok', postData: post,message:'Your post has been successfully submitted!' })
                     } else {
                         throw new Error('Failed to create post')
                     }

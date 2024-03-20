@@ -6,7 +6,7 @@ import Layout from "./pages/layout/Layout";
 import Home from "./pages/user/home/Home";
 import Login from "./pages/auth/login/Login";
 import Verification from "./pages/auth/verification/Verification";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "./store/store";
 import { fetchuser } from "./store/actions/auth/userActions";
@@ -17,8 +17,9 @@ function App() {
   const dispatch = useDispatch<AppDispatch>();
   
 
+
   useEffect(() => {
-    dispatch(fetchuser());
+    dispatch(fetchuser())
   });
 
   return (

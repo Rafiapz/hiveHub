@@ -1,4 +1,12 @@
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
+import { ObjectId } from "mongodb";
+
+interface MyToken {
+  id: ObjectId,
+  email: string,
+  iat: number,
+  exp: number
+}
 
 export const genereateToken = (payload: any) => {
   try {
@@ -16,13 +24,22 @@ export const genereateToken = (payload: any) => {
 export const verifyToken = (token: string) => {
   try {
     const secret: any = process.env.jwtSecret;
-    const decoded = jwt.verify(token, secret);
+    const verified = jwt.verify(token, secret);
 
-    if (decoded) {
-      if (decoded === "jwt expired") {
+    if (verified) {
+
+      if (verified === "jwt expired") {
         return false;
       }
-      return true;
+
+      const decodedToken = jwt.decode(token);
+
+      if (decodedToken && typeof decodedToken === 'object' && decodedToken.hasOwnProperty('email')) {
+        const email = decodedToken.email;
+        const id=decodedToken.id
+        return {email,id}
+        
+      }
     } else {
       return false;
     }
